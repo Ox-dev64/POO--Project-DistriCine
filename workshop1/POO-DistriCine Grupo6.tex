@@ -1,0 +1,160 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+% ---------------- DOCUMENT ----------------
+\begin{document}
+
+% ---------------- COVER PAGE (APA style) ----------------
+\begin{titlepage}
+    \centering
+    \vspace*{1.5cm}
+    {\Large Object-Oriented Programming \par}
+    \vfill
+    {\bfseries\LARGE Workshop No. 1 - Object-Oriented Design \par}
+    \vfill
+    {\large
+        Diego Alejandro Yañes Zabala (20251020103) \\ 
+        Brayan Sebastian Diaz Ramirez (20251020150) \\
+        Oscar Javier Camargo Trujillo (20251020143) \par
+    }
+    \vfill
+    {\Large Universidad Distrital Francisco José de Caldas \par}
+    \vspace{1.5cm}
+    {\large Faculty of Engineering \par}
+    {\large Systems Engineering Program \par}
+    {\large Teacher: Ing. Carlos Andrés Sierra, M.Sc \par}
+    {\large Bogotá D.C., Colombia \par}
+    {\large 2025 \par}
+\end{titlepage}
+
+% ---------------- MAIN CONTENT ----------------
+\section*{Object-Oriented Programming APPLICATION: DISTRICINE}
+
+The client requests the development of an application that optimizes access to the films available within the framework of the creation of the university film club (Cine Club at Universidad Francisco José de Caldas).
+
+This application will allow university students to schedule and attend different screenings on the various university campuses.
+
+The main objective of the application is to allow users to:
+\begin{itemize}
+    \item Consult movie schedules.
+    \item Purchase tickets.
+    \item View information about movies in the catalog.
+    \item Watch trailers and promotions.
+    \item Manage their account (purchase history, tickets, etc.).
+\end{itemize}
+
+In this way, the application can facilitate ticket generation and consultation of movie schedules efficiently and in real time, without the need to manually go to DistriCine facilities on different campuses.
+
+\section{FUNCTIONAL REQUIREMENTS}
+\begin{itemize}
+    \item \textbf{FR1:} The program must display a list of available movies and a short trailer.
+    \item \textbf{FR2:} The program must display detailed information about each movie (title, genre, duration, rating, synopsis, poster, and trailer).
+    \item \textbf{FR3:} The program must allow searching for available movies.
+    \item \textbf{FR4:} The program must allow filtering movies by genre.
+    \item \textbf{FR5:} The home page must display the cinema name and its logo.
+\end{itemize}
+
+\section{NON-FUNCTIONAL REQUIREMENTS}
+\begin{itemize}
+    \item \textbf{NFR1:} The program must run on Windows.
+    \item \textbf{NFR2:} The program must respond in less than 3 seconds.
+    \item \textbf{NFR3:} The program must provide a simple and intuitive user interface.
+\end{itemize}
+
+\section{USER STORIES}
+
+\subsection*{US1 – Client views list of movies}
+\begin{itemize}
+    \item \textbf{As:} user
+    \item \textbf{I want:} to see the list of available movies
+    \item \textbf{Acceptance criteria:} The main screen shows movies with posters and titles.
+\end{itemize}
+
+\subsection*{US2 – Client views movie details}
+\begin{itemize}
+    \item \textbf{As:} user
+    \item \textbf{I want:} to view the information of a selected movie
+    \item \textbf{Acceptance criteria:} The details show title, genre, duration, rating, synopsis, and a trailer.
+\end{itemize}
+
+\subsection*{US3 – Client filters movies by genre}
+\begin{itemize}
+    \item \textbf{As:} user
+    \item \textbf{I want:} to filter movies by genre
+    \item \textbf{Acceptance criteria:} When selecting Thriller, only thriller movies are displayed.
+\end{itemize}
+
+% ---------------- MOCKUPS ----------------
+\section{MOCKUPS}
+
+\url{https://www.figma.com/design/oEZotW0T5FcUkjDXcMD9ob/Movies---Tv-Shows-Website--Cinema-City---Community-?node-id=0-1&t=ZIB7p2rdofcI7SBU-1}
+
+\newpage
+\begin{samepage}
+\subsection*{Mockup 1}
+The login, registration, and search options are located in the upper left corner, as this facilitates user actions. Additionally, we usually move our eyes from right to left, allowing better exploration of the program.
+
+As one of the program’s main objectives is to allow the user to schedule their cinema attendance, the top banner —which covers a wide area— shows the latest release or the movie that the cinema will screen.
+
+The catalog shows the different movies available for screening, including the latest releases as well as movie genres that the user can explore along with their respective films.
+
+At the bottom of the screen, the university campuses where the screenings will take place are displayed.
+
+The cinema’s name is shown along with campus information.
+
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{mockup1.jpg}
+\end{center}
+\end{samepage}
+
+\newpage
+\begin{samepage}
+\subsection*{Mockup 2}
+When the user clicks on a selected movie, they are directed to this page where the movie poster and a synopsis are displayed.
+
+Regarding the rating or voting system, this feature allows the user to form an idea about the movie.
+
+The trailer provides a preview of the film, generating impact and attraction for the user.
+
+This section also shows available dates and times: here the user can see the days the film will be shown, if scheduled, along with the exact times so that the user can plan accordingly.
+
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{mockup2.jpg}
+\end{center}
+\end{samepage}
+
+% ---------------- IMAGES ----------------
+\section{CRC CARDS}
+\begin{center}
+\begin{tabular}{ccc}
+    \includegraphics[width=0.28\textwidth]{image1.jpg} &
+    \includegraphics[width=0.28\textwidth]{image2.jpg} &
+    \includegraphics[width=0.28\textwidth]{image3.jpg} \\
+    \includegraphics[width=0.28\textwidth]{image4.jpg} &
+    \includegraphics[width=0.28\textwidth]{image5.jpg} &
+    \includegraphics[width=0.28\textwidth]{image6.jpg} \\
+    \includegraphics[width=0.28\textwidth]{image7.jpg} &
+    \includegraphics[width=0.28\textwidth]{image8.jpg} &
+\end{tabular}
+\end{center}
+
+% ---------------- REFLECTION ----------------
+\section{REFLECTION}
+
+During the design process of DistriCine, one of the main challenges was defining the scope of the application. Initially, the idea included many features such as seat reservation, snack purchasing, and advanced account management. However, due to time constraints and the workshop’s focus, the scope was reduced to viewing the movie catalog, basic ticket management, and user account functions.
+
+This simplification made it possible to clearly identify the essential system requirements, main user interactions, and core classes, while ensuring the project remained feasible. Designing the mockups helped visualize how users would interact with the system, making the flow more intuitive. Overall, this stage allowed me to understand the importance of balancing ambition with practicality in software design.
+
+% ---------------- REFERENCES ----------------
+\begin{thebibliography}{2}
+\bibitem{figma} Official Figma Documentation. (2025). \textit{Figma Design and Prototyping Tool}. Retrieved from: \url{https://help.figma.com}
+\bibitem{cinecolombia} Cine Colombia. (2025). \textit{Official Website}. Retrieved from: \url{https://www.cinecolombia.com}
+\end{thebibliography}
+
+\end{document}
