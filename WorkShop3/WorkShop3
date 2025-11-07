@@ -1,0 +1,1 @@
+In this workshop 3 we applied what we learned in the development of object-oriented programming classes, such as the SOLID principles, while also reviewing user stories, CRC cards and UML, bringing them to the SOLID implementation
