@@ -1,0 +1,609 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{afterpage}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{helvet}
+\usepackage{caption}
+
+% Configuración de colores para tablas
+\definecolor{headerblue}{RGB}{41,128,185}
+\definecolor{lightblue}{RGB}{236,240,241}
+\definecolor{lightgray}{RGB}{245,245,245}
+
+% Configuración de código
+\lstset{
+    language=Java,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{red},
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!10},
+    numbers=left,
+    numberstyle=\tiny\color{gray}
+}
+
+% Configuración de página
+\geometry{margin=2.5cm}
+
+% Estilo para tablas profesionales
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\tableheader}[1]{\cellcolor{headerblue}\textcolor{white}{\textbf{#1}}}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+
+% Configuración de captions
+\captionsetup[table]{justification=centering, font=small, labelfont=bf}
+
+\begin{document}
+
+% Portada mejorada
+\begin{titlepage}
+    \centering
+    \vspace*{-1.5cm}
+    
+    {\LARGE \textbf{Object-Oriented Programming}}\\[0.5cm]
+    \rule{\textwidth}{1pt}\\[0.5cm]
+    {\Huge \textbf{Workshop 3}}\\[0.3cm]
+    {\Large \textbf{Application of SOLID Principles in the DistriCine Project}}\\[0.5cm]
+    \rule{\textwidth}{1pt}\\[1.5cm]
+    
+    \begin{minipage}{0.8\textwidth}
+        \centering
+        \large
+        \textbf{Authors:}\\[0.3cm]
+        Diego Alejandro Yañez Zabala\\
+        \textbf{(20251020103)}\\[0.2cm]
+        Brayan Sebastian Diaz Ramirez\\
+        \textbf{(20251020150)}\\[0.2cm]
+        Oscar Javier Camargo Trujillo\\
+        \textbf{(20251020143)}\\[1.5cm]
+    \end{minipage}
+    
+    \vfill
+    
+    \begin{minipage}{0.8\textwidth}
+        \centering
+        \large
+        \textbf{Universidad Distrital Francisco José de Caldas}\\
+        Faculty of Engineering\\
+        Systems Engineering Program\\[0.5cm]
+        \textbf{Teacher: Ing. Carlos Andrés Sierra, M.Sc}\\[0.5cm]
+        \textbf{Bogotá D.C., Colombia}\\
+        \textbf{2025}
+    \end{minipage}
+\end{titlepage}
+
+% Introducción
+\section{Introduction}
+
+The management of cultural and recreational activities at the university, such as film clubs, has historically relied on manual processes that include going from classroom to classroom, posting flyers, and distributing leaflets to invite students to scheduled screenings. These methods are time-consuming, generate little visibility, and rarely capture the attention of the student community, resulting in inefficient resource allocation and low attendance due to a lack of planning. In response to these limitations, \emph{DistriCine was launched at the Francisco José de Caldas District University}, a project aimed at digitizing, organizing, and optimizing the management of university film screenings across multiple campuses.
+
+While commercial cinema management systems exist, they are unsuitable for academic settings: their complexity, high cost, and lack of integration with institutional functionalities (such as university identification, multi-site management, or simplified processes) make them impractical for a university film club. \emph{DistriCine} therefore proposes a lightweight, specialized system fully adapted to the needs of the university.
+
+The project adopts Object-Oriented Programming (OOP) as its fundamental paradigm. This acts as a "master script" that structures the system: encapsulation defines the specific responsibility of each class, inheritance establishes clear hierarchies between user types, and polymorphism allows different components to respond in specific ways to shared actions. The application of object-oriented programming was initially designed during Workshop 1 (Conceptual Design), and then implemented in Workshop 2 (more precisely, the application of OOP principles), where the system's main classes were built and the development of DistriCine began.
+
+In this third stage, corresponding to Workshop 3, the project evolves from a basic object-oriented design to a robust and maintainable architecture through the explicit integration of SOLID principles. This workshop involves reviewing and improving the requirements, user stories, CRC cards, and the system's UML model, ensuring that the design adequately addresses criteria of extensibility, cohesion, loose coupling, and interchangeability.
+
+\section{Requirements Update}
+
+\subsection{Updated Functional Requirements (FR)}
+
+\begin{table}[H]
+\centering
+\caption{Functional Requirements}
+\begin{tabularx}{0.95\textwidth}{|>{\centering\arraybackslash}p{0.08\textwidth}|X|}
+\hline
+\rowcolor{headerblue}
+\tableheader{ID} & \tableheader{Requirement} \\
+\hline
+\cellcolor{lightblue}FR1 & The system must allow authentication via email and password. \\
+\hline
+FR2 & The system must handle two roles: \textbf{Administrator} and \textbf{Student}. \\
+\hline
+\cellcolor{lightblue}FR3 & Students should be able to consult the film catalog. \\
+\hline
+FR4 & Students should be able to book performances. \\
+\hline
+\cellcolor{lightblue}FR5 & Administrators must be able to manage movies. \\
+\hline
+FR6 & Administrators must be able to manage screening schedules. \\
+\hline
+\cellcolor{lightblue}FR7 & Administrators must be able to manage university campuses. \\
+\hline
+FR8 & The system must show seat availability for each function. \\
+\hline
+\cellcolor{lightblue}FR9 & The system must display a transactional flow in the console. \\
+\hline
+FR10 & All modules must respect the Single Responsibility Principle (SRP). \\
+\hline
+\cellcolor{lightblue}FR11 & The system must be extensible without modifying existing code (OCP). \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Non-Functional Requirements (NFR)}
+
+\begin{table}[H]
+\centering
+\caption{Non-Functional Requirements}
+\begin{tabularx}{0.95\textwidth}{|>{\centering\arraybackslash}p{0.08\textwidth}|X|}
+\hline
+\rowcolor{headerblue}
+\tableheader{ID} & \tableheader{Requirement} \\
+\hline
+\cellcolor{lightblue}NFR1 & Response time less than 3 seconds. \\
+\hline
+NFR2 & Simple and clear console interface. \\
+\hline
+\cellcolor{lightblue}NFR3 & Classes must comply with SRP to facilitate maintenance. \\
+\hline
+NFR4 & The design must be open to extension and closed to modification (OCP). \\
+\hline
+\cellcolor{lightblue}NFR5 & Dependencies should point to abstractions (DIP). \\
+\hline
+NFR6 & Subclasses must be interchangeable without breaking behavior (LSP). \\
+\hline
+\cellcolor{lightblue}NFR7 & Interfaces should be small and specific (ISP). \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Updated User Stories}
+
+\begin{table}[H]
+\centering
+\caption{User Stories}
+\begin{tabularx}{0.95\textwidth}{|>{\centering\arraybackslash}p{0.08\textwidth}|>{\centering\arraybackslash}p{0.25\textwidth}|X|}
+\hline
+\rowcolor{white}
+\tableheader{ID} & \tableheader{Role} & \tableheader{Description} \\
+\hline
+\cellcolor{white}US1 & Student & As a student, I want to see the list of movies to choose a show. \\
+\hline
+US2 & Student & As a student, I want to reserve a performance so I can attend. \\
+\hline
+\cellcolor{white}US3 & User & As a User, I want to log in to access the features of my role. \\
+\hline
+US4 & Administrator & As Administrator, I want to manage movies to keep the catalog up to date. \\
+\hline
+\cellcolor{white}US5 & Administrator & As an Administrator, I want to create and update schedules to organize functions. \\
+\hline
+US6 & Administrator & As Administrator, I want to manage university sites to define where projections take place. \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{CRC Cards}
+
+\begin{table}[H]
+\centering
+\caption{CRC Cards - System Classes Summary}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{0.95\textwidth}{|l|>{\raggedright\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.4\textwidth}|}
+\hline
+\rowcolor{white}
+\tableheader{Class} & \tableheader{Responsibilities} & \tableheader{Collaborators} \\
+\hline
+\cellcolor{white}USER & 
+- Register\newline
+- Login\newline  
+- Read Catalog\newline
+- Enable reservations &
+- Pay\newline
+- Catalog (Movies)\newline
+- Reservation \\
+\hline
+\cellcolor{white}USER Attributes & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+ID, Full name, Email, Number, Password, State} \\
+\hline
+\cellcolor{white}USER Behaviors & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+Register(), Login(), Log out(), Modify Profile(), Read Catalog(), Buy Tickets()} \\
+\hline
+\cellcolor{white}CUSTOMER\_USER & 
+- Makes payments &
+- Pay \\
+\hline
+\cellcolor{white}ADMIN\_USER & 
+- Management system\newline
+- Manage users &
+- Pay\newline
+- Movie\newline
+- Schedule \\
+\hline
+\cellcolor{white}MOVIE & 
+- Show info &
+- Schedule\newline
+- Ticket\newline
+- Catalog (Movies) \\
+\hline
+\cellcolor{white}MOVIE Attributes & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+ID, Title, Genre, Duration, Rating, Synopsis, Trailers, State, Actors} \\
+\hline
+\cellcolor{white}MOVIE Behaviors & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+Show Info()} \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{CRC Cards - Continuation}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{0.95\textwidth}{|l|>{\raggedright\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.4\textwidth}|}
+\hline
+\rowcolor{white}
+\tableheader{Class} & \tableheader{Responsibilities} & \tableheader{Collaborators} \\
+\hline
+\cellcolor{white}HEADQUARTERS & 
+- Show info\newline
+- Show Movie Theater &
+- Movie Theater \\
+\hline
+\cellcolor{white}HEADQUARTERS Attributes & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+ID, Name, Direction} \\
+\hline
+\cellcolor{white}HEADQUARTERS Behaviors & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+Show Info()} \\
+\hline
+\cellcolor{white}MOVIE THEATER & 
+- Show info\newline
+- Manage capacity &
+- Schedule\newline
+- Headquarters \\
+\hline
+\cellcolor{white}MOVIE THEATER Attributes & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+ID, Number, Ability, ID\_HEADQUARTERS} \\
+\hline
+\cellcolor{white}MOVIE THEATER Behaviors & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+Show seats available()} \\
+\hline
+\cellcolor{white}SCHEDULE & 
+- Show info &
+- Movie\newline
+- Cine Theater\newline
+- Ticket \\
+\hline
+\cellcolor{white}SCHEDULE Attributes & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+ID, Date, Hour, ID\_MOVIE, ID\_MOVIE\_THEATER} \\
+\hline
+\cellcolor{white}SCHEDULE Behaviors & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+Show Info()} \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{CRC Cards - Final Part}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{0.95\textwidth}{|l|>{\raggedright\arraybackslash}p{0.4\textwidth}|>{\raggedright\arraybackslash}p{0.4\textwidth}|}
+\hline
+\rowcolor{white}
+\tableheader{Class} & \tableheader{Responsibilities} & \tableheader{Collaborators} \\
+\hline
+\cellcolor{white}TICKET & 
+- Show info &
+- Movie\newline
+- Schedule \\
+\hline
+\cellcolor{white}TICKET Attributes & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+ID, Price, Seat, ID\_SCHEDULE, ID\_MOVIE} \\
+\hline
+\cellcolor{white}TICKET Behaviors & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+Show info()} \\
+\hline
+\cellcolor{white}RESERVATION & 
+- Book ticket &
+- User\newline
+- Ticket\newline
+- Payment \\
+\hline
+\cellcolor{white}RESERVATION Attributes & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+ID, Reservation\_date, ID\_USER, ID\_TICKET} \\
+\hline
+\cellcolor{white}RESERVATION Behaviors & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+Create Reservation(), Delete Reservation()} \\
+\hline
+\cellcolor{white}PAYMENT & 
+- Make a pay\newline
+- Verify pay &
+- USER \\
+\hline
+\cellcolor{white}PAYMENT Attributes & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+ID, Cost, Date, Payment Method, ID\_RESERVATION, ID\_USER} \\
+\hline
+\cellcolor{white}PAYMENT Behaviors & 
+\multicolumn{2}{p{0.85\textwidth}|}{
+Show info(), Verify()} \\
+\hline
+\end{tabularx}
+\end{table}
+\\
+\subsection{Class Diagram}
+   Class diagram showing the inheritance structure and relationships between classes, followed by a second class diagram that applies SOLID principles and builds interfaces for reservations, payments, and information display.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]
+{ClassDiag1.jpg}
+\caption{Diagram of Class 1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]
+{DiagSolid.jpg}
+\caption{Class Diagram 2 - Applying SOLID Principles}
+\end{figure}
+
+
+
+\subsection{SOLID Principles Implementation Table}
+
+\begin{table}[H]
+\centering
+\caption{Implementation of SOLID Principles in DistriCine}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{0.95\textwidth}{|>{\centering\arraybackslash}p{0.12\textwidth}|>{\centering\arraybackslash}p{0.15\textwidth}|X|}
+\hline
+\rowcolor{white}
+\tableheader{Principle} & \tableheader{Acronym} & \tableheader{Implementation} \\
+\hline
+\cellcolor{white}Single Responsibility & SRP & Each class has a clear function: USER handles authentication, RESERVATION manages reservations, and PAYMENT controls payments. This prevents overloading the classes and simplifies maintenance. \\
+\hline
+\cellcolor{white}Open/Closed & OCP & Classes are open to extension (they can inherit or implement new interfaces) but closed to modification. For example, if a new user type or a new payment method is added, it is not necessary to alter the existing code. \\
+\hline
+\cellcolor{white}Liskov Substitution & LSP & The subclasses (CUSTOMER\_USER, ADMIN\_USER) can replace the USER class without altering the system's operation, since they maintain the same structure and expected behavior. \\
+\hline
+\cellcolor{white}Interface Segregation & ISP & Small, specific interfaces (INT\_Payable, INT\_Reservable, INT\_ShowInfo) are defined to prevent classes from implementing methods they don't need. Each class only implements the interfaces that correspond to it. \\
+\hline
+\cellcolor{white}Dependency Inversion & DIP & Classes rely on abstractions rather than concrete implementations. For example, CUSTOMER\_USER makes a payment through the IPayable interface, not directly through the PAYMENT class. This allows the payment method to be changed without affecting the rest of the system. \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Sequence Diagram}\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]
+{image3.jpg}
+\caption{Sequence Diagram}
+\end{figure}
+
+\section{Implementation of SOLID Principles in DistriCine}
+
+The DistriCine architecture was reorganized to strengthen its maintainability, extensibility, and internal consistency by explicitly applying each of the SOLID principles. The following describes how these principles were integrated into the system design, based on the final UML diagram.
+
+\subsection{Single Responsibility Principle (SRP)}
+
+\begin{table}[H]
+\centering
+\caption{SRP Implementation Examples}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{0.95\textwidth}{|>{\raggedright\arraybackslash}p{0.3\textwidth}|X|}
+\hline
+\rowcolor{headerblue}
+\tableheader{Class} & \tableheader{Single Responsibility} \\
+\hline
+\cellcolor{lightblue}USER & Basic authentication and catalog readings only \\
+\hline
+\cellcolor{lightgray}CUSTOMER\_USER & Customer-specific operations (booking, paying, purchasing tickets) \\
+\hline
+\cellcolor{lightblue}ADMIN\_USER & Administrative tasks and system management \\
+\hline
+\cellcolor{lightgray}MOVIE, SCHEDULE, HEADQUARTER & Store data and present information using showInfo() \\
+\hline
+\cellcolor{lightblue}RESERVATION & Handle only creation and deletion of reservations \\
+\hline
+\end{tabularx}
+\end{table}
+
+To comply with SRP, classes that combined multiple functions were identified and separated into components with clearly defined responsibilities.
+
+\begin{itemize}
+    \item The USER class was exclusively responsible for basic authentication and catalog readings; customer-specific operations (booking, paying, purchasing tickets) were moved to CUSTOMER\_USER, and administrative tasks were delegated to ADMIN\_USER.
+    \item Domain entities (MOVIE, SCHEDULE, HEADQUARTER, TICKET, etc.) are limited to storing data and presenting information using showInfo().
+    \item RESERVATION was reduced to handling only the creation and deletion of reservations, avoiding mixing payment or room management logic.
+\end{itemize}
+
+With this, each class has only one valid reason to change.
+
+\subsection{Open/Closed Principle (OCP)}
+
+The design allows extending functionality without modifying existing classes.
+
+\begin{itemize}
+    \item USER was declared as a generalizable base class. User type variations (CUSTOMER\_USER, ADMIN\_USER) are achieved through inheritance, allowing adding additional roles (such as STAFF\_USER) without touching the parent class.
+    \item The use of the common interface INT\_SHOW\_INFO allows extending new displayable elements (e.g., PROMOTION, EVENT) without modifying existing classes.
+    \item The payment processor and reservation logic can be extended by adding new interface implementations without altering the core of the system.
+\end{itemize}
+
+This ensures that the system grows without compromising the stability of the already tested code.
+
+\subsection{Liskov Substitution Principle (LSP)}
+
+Subclasses were designed to behave as valid substitutes for their base classes.
+
+\begin{itemize}
+    \item Any instance of CUSTOMER\_USER or ADMIN\_USER can be treated as a USER without generating inconsistencies. They all correctly implement the inherited methods (login, readCatalog).
+    \item Classes that implement INT\_SHOW\_INFO (such as MOVIE, HEADQUARTER, or TICKET) guarantee the uniform availability of the showInfo() method, allowing them to be treated polymorphically.
+    \item Reservation and payment operations respect this principle by relying on stable abstractions (interfaces), ensuring that new implementations do not alter expected behavior.
+\end{itemize}
+
+This maintains consistent and predictable behavior throughout the system.
+
+\subsection{Interface Segregation Principle (ISP)}
+
+To avoid overly broad interfaces or forcing classes to implement unnecessary methods, small and specific interfaces were designed:
+
+\begin{itemize}
+    \item INT\_SHOW\_INFO encapsulates only the presentation operation.
+    \item INT\_RESERVABLE defines the minimum actions related to reservations.
+    \item INT\_PAYABLE groups only the behavior related to payments.
+\end{itemize}
+
+In this way, each class implements only the interfaces it actually needs, maintaining a modular and easily modifiable system.
+
+\subsection{Dependency Inversion Principle (DIP)}
+
+Dependency was promoted toward abstractions instead of concrete classes.
+
+\begin{itemize}
+    \item Payment operations were abstracted through the INT\_PAYABLE interface, allowing multiple payment types without coupling the system to a single implementation.
+    \item RESERVATION, instead of interacting directly with concrete payment or ticket classes, operates on interfaces (INT\_RESERVABLE, INT\_PAYABLE) that allow replacing or extending behaviors without modifying the internal logic.
+    \item The components responsible for displaying information depend on INT\_SHOW\_INFO, which eliminates rigid dependencies between classes.
+\end{itemize}
+
+Thanks to this investment, DistriCine is able to incorporate new payment methods, new types of reservations, or new catalog items without affecting the upper layers of the system.
+
+\section{Work in Progress Code \& Documentation}
+
+\subsection{S -- Single Responsibility Principle (SRP)}
+
+\textbf{Definition:} A class should have only one reason to change.
+
+\begin{lstlisting}[caption=SRP Implementation Example]
+public class Movie {
+    private String title;
+    private String genre;
+    private int duration;
+    private String synopsis;
+    
+    public void displayInfo() {
+        System.out.println(title + " (" + genre + ")");
+    }
+}
+\end{lstlisting}
+
+\textbf{Explanation:}\\
+The Movie class is responsible only for managing movie data and showing basic information. It does not handle ticket sales or user management, maintaining a single responsibility.
+
+\subsection{O -- Open/Closed Principle (OCP)}
+
+\textbf{Definition:} Classes should be open for extension but closed for modification.
+
+\begin{lstlisting}[caption=OCP Implementation Example]
+public abstract class User {
+    protected String name;
+    protected String email;
+    public abstract void accessSystem();
+}
+
+public class CustomerUser extends User {
+    public void accessSystem() {
+        System.out.println("Customer accessing the movie catalog...");
+    }
+}
+
+public class AdminUser extends User {
+    public void accessSystem() {
+        System.out.println("Admin managing movie listings...");
+    }
+}
+\end{lstlisting}
+
+\textbf{Explanation:}\\
+User can be extended to new roles (e.g., StaffUser) without modifying the base class, fulfilling the Open/Closed Principle.
+
+\subsection{L -- Liskov Substitution Principle (LSP)}
+
+\textbf{Definition:} Subclasses should be substitutable for their base classes.
+
+\begin{lstlisting}[caption=LSP Implementation Example]
+public void showAccess(User user) {
+    user.accessSystem();
+}
+\end{lstlisting}
+
+\textbf{Explanation:}\\
+Both CustomerUser and AdminUser can replace User without breaking functionality since both override accessSystem(). This respects LSP because the program works correctly regardless of which subclass is used.
+
+\subsection{I -- Interface Segregation Principle (ISP)}
+
+\textbf{Definition:} Clients should not be forced to depend on interfaces they do not use.
+
+\begin{lstlisting}[caption=ISP Implementation Example]
+public interface ReservationActions {
+    void makeReservation();
+}
+
+public interface PaymentActions {
+    void makePayment();
+}
+\end{lstlisting}
+
+\textbf{Explanation:}\\
+By separating actions into different interfaces, a class that only handles reservations does not need to implement payment-related methods. This keeps the system modular and avoids "fat" interfaces.
+
+\subsection{D -- Dependency Inversion Principle (DIP)}
+
+\textbf{Definition:} High-level modules should not depend on low-level modules, but both should depend on abstractions.
+
+\begin{lstlisting}[caption=DIP Implementation Example]
+public interface PaymentProcessor {
+    void processPayment(double amount);
+}
+
+public class CreditCardPayment implements PaymentProcessor {
+    public void processPayment(double amount) {
+        System.out.println("Processing credit card payment of $" + amount);
+    }
+}
+
+public class Reservation {
+    private PaymentProcessor processor;
+    
+    public Reservation(PaymentProcessor processor) {
+        this.processor = processor;
+    }
+    
+    public void confirm() {
+        processor.processPayment(20.0);
+    }
+}
+\end{lstlisting}
+
+\textbf{Explanation:}\\
+Reservation depends on the abstraction PaymentProcessor rather than a concrete class. This allows changing the payment method (e.g., PayPal, CreditCard) without altering the reservation logic.
+
+\section{Reflection and Conclusions}
+
+Working on Workshop 3 of the DistriCine project allowed us to understand the importance of applying SOLID principles not just as theoretical rules, but as practical tools for building clean, maintainable, and adaptable software. By separating responsibilities, depending on abstractions, and designing classes that are open to extension but closed to modification, the system becomes more flexible to future changes—something essential in real-world environments like the university setting, where requirements constantly evolve. This approach helped us see object-oriented programming not only as a way to organize code, but as a structured way of thinking about problem-solving.
+
+The application of SOLID principles transformed our perspective on software design. We moved from focusing solely on functionality to considering maintainability, scalability, and code quality. The Single Responsibility Principle taught us the value of focused, cohesive classes. The Open/Closed Principle showed us how to design systems that can grow without breaking existing functionality. The Liskov Substitution Principle reinforced the importance of proper inheritance hierarchies. The Interface Segregation Principle demonstrated the power of focused, client-specific interfaces. Finally, the Dependency Inversion Principle highlighted the benefits of depending on abstractions rather than concrete implementations.
+
+This experience has been invaluable in developing our skills as software engineers. We now recognize that good software design is not just about making code work, but about making it resilient to change, easy to understand, and simple to extend. The SOLID principles provide a framework for achieving these goals, and their application in the DistriCine project has given us practical experience that we can carry forward into future software development projects.
+
+\end{document}
